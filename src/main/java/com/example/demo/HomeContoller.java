@@ -1,10 +1,7 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HomeContoller {
@@ -27,10 +24,9 @@ public class HomeContoller {
     }
 
     @CrossOrigin
-    @RequestMapping("/deletecar")
-    public String deleteCar(@RequestBody Car car){
+    @RequestMapping(value = "{vnum}", method= RequestMethod.DELETE)
+    public String deleteCar(@PathVariable("vnum") String vnum, Car car){
         System.out.println(car.getModel());
-        
 
         carRepository.delete(car);
         return "A car was deleted.";
