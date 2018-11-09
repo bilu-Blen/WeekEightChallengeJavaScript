@@ -22,5 +22,13 @@ public class DataLoader implements CommandLineRunner {
         car.setYear("2010");
 
         carRepository.save(car);
+
+        Car car1 = new Car();
+        car.setModel("116i766");
+        car.setMake("Fiat 1500");
+        car.setVnum("M12345");
+        car.setYear("2018");
+
+        carRepository.save(car1);
     }
 }
