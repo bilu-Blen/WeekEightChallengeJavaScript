@@ -17,7 +17,7 @@ var cars = [
     z.setAttribute("id", "mycell");
     document.getElementById("myTr").appendChild(z);*/
 
-function listCars(){
+function listCars(cars){
     alert(cars.length + " are being loaded");
     var eachcarplace = "";
 
@@ -42,6 +42,112 @@ function listCars(){
 
 }
 
-function addCar(){
+function getCars(){
+     var HttpObject = new XMLHttpRequest();
+     var url = "http://localhost:8080/";
+
+     HttpObject.responseType = 'json';
+     HttpObject.open('GET', url);
+     HttpObject.send();
+
+     HttpObject.onreadystatechange = function(){
+         if(this.readyState==1){
+             console.log("Connection established");
+         }
+         if(this.readyState==3){
+             console.log("Loading Data");
+         }
+         if(this.readyState ==4){
+             console.log("Done");
+             if(this.status==200){
+                 console.log("Result successful. Check your page");
+                 theResponse = this.response;
+                 listCars(theResponse);
+                 console.log(theResponse.cars);
+             }
+             else{
+                 console.log("Something is wrong. Check below for details");
+                 console.log(this.statusText);
+             }
+         }
+     }
 
 }
+
+function addCarText(){
+    var uservnumber= document.getElementById("uservnumber").value;
+    var usermake= document.getElementById("usermake").value;
+    var usermodel= document.getElementById("usermodel").value;
+    var useryear= document.getElementById("useryear").value;
+
+    var newCar = JSON.stringify({"vnum": uservnumber, "make": usermake, "model": usermodel, "year": useryear})
+    return newCar;
+}
+
+
+function addCar(){
+    var obj = new XMLHttpRequest();
+    obj.open("POST", "http://localhost:8080/addcar")
+    obj.setRequestHeader("Content-Type", "application/json");
+    var newCar = addCarText();
+    obj.send(newCar);
+    alert("The car you entered has been added");
+
+}
+
+function getCarsList(){
+    var HttpObject = new XMLHttpRequest();
+    var url = "http://localhost:8080/";
+
+    HttpObject.responseType = 'json';
+    HttpObject.open('GET', url);
+    HttpObject.send();
+
+    HttpObject.onreadystatechange = function(){
+        if(this.readyState==1){
+            console.log("Connection established");
+        }
+        if(this.readyState==3){
+            console.log("Loading Data");
+        }
+        if(this.readyState ==4){
+            console.log("Done");
+            if(this.status==200){
+                console.log("Result successful. Check your page");
+                theResponse = this.response;
+/*
+                console.log(theResponse.cars);
+*/
+                return theResponse;
+
+            }
+            else{
+                console.log("Something is wrong. Check below for details");
+                console.log(this.statusText);
+            }
+        }
+    }
+
+}
+
+
+    function deleteCar(cars){
+        var obj = new XMLHttpRequest();
+        obj.open("POST", "http://localhost:8080/deletecar")
+        obj.setRequestHeader("Content-Type", "application/json");
+
+        var deletevnum = document.getElementById("deletevnum");
+        var tobeDeleted = JSON.stringify({"vnum": deletevnum});
+
+        return tobeDeleted;
+       /* console.log(obj);
+
+        for(var i = 0; i <= cars.length ; i++){
+            if(deletevnum == newCars[i].vnum){
+                newCars.splice(newCars[i], 1);
+            }
+
+        }*/
+
+
+    }
