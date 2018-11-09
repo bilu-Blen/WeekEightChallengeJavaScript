@@ -132,27 +132,11 @@ function getCarsList(){
 
 
     function deleteCar(){
-      /*  var obj = new XMLHttpRequest();
-        obj.open("POST", "http://localhost:8080/deletecar")
-        obj.setRequestHeader("Content-Type", "application/json");
 
-        var tobeDeleted = JSON.stringify({"vnum": deletevnum});
+        var deletevnum = document.getElementById("deletevnum").value;
 
-        return tobeDeleted;*/
-       /* console.log(obj);
-
-        for(var i = 0; i <= cars.length ; i++){
-            if(deletevnum == newCars[i].vnum){
-                newCars.splice(newCars[i], 1);
-            }
-
-        }*/
-        var deletevnum = document.getElementById("deletevnum");
-
-        $.ajax({
-            type: "DELETE",
-            url: "/deletecar/" + deletevnum
-
-
-        })
+       var obj = new XMLHttpRequest();
+        obj.open("GET", "http://localhost:8080/deletecar?vnum="+deletevnum);
+        obj.send();
+        alert("The car you entered has been deleted");
     }
