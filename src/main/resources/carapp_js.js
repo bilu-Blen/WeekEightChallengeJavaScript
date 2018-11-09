@@ -131,15 +131,14 @@ function getCarsList(){
 }
 
 
-    function deleteCar(cars){
-        var obj = new XMLHttpRequest();
+    function deleteCar(){
+      /*  var obj = new XMLHttpRequest();
         obj.open("POST", "http://localhost:8080/deletecar")
         obj.setRequestHeader("Content-Type", "application/json");
 
-        var deletevnum = document.getElementById("deletevnum");
         var tobeDeleted = JSON.stringify({"vnum": deletevnum});
 
-        return tobeDeleted;
+        return tobeDeleted;*/
        /* console.log(obj);
 
         for(var i = 0; i <= cars.length ; i++){
@@ -148,6 +147,12 @@ function getCarsList(){
             }
 
         }*/
+        var deletevnum = document.getElementById("deletevnum");
+
+        $.ajax({
+            type: "DELETE",
+            url: "/deletecar/" + deletevnum
 
 
+        })
     }
